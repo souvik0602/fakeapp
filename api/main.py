@@ -19,7 +19,7 @@ async def read_index():
 
 
 async def forward_request(url: str, request: Request):
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=600.0) as client:
         headers = dict(request.headers)
         body = await request.body()
         response = await client.request(request.method, url, headers=headers, content=body)
