@@ -113,11 +113,11 @@
 </head>
 <body>
     <script>
-        
+        let selectedFileInput = null;
+        let selectedFileInput2 = null;
+        let selectedFileInput3 = null;
         document.addEventListener('DOMContentLoaded', () => {
-            let selectedFileInput = null;
-            let selectedFileInput2 = null;
-            let selectedFileInput3 = null;
+
 
             document.getElementById('input1').addEventListener('click', () => selectedFileInput = 'fileInput1');
             document.getElementById('input2').addEventListener('click', () => selectedFileInput = 'fileInput2');
