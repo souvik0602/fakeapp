@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+            padding-top: 80px; /* Space for the fixed navbar */
+            padding-bottom: 50px; /* Space for the fixed footer */
+        }
+        .navbar {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Ensures the navbar is above other content */
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto; /* General margin for all containers */
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: auto; /* Ensures content does not overflow */
+        }
+        /* Specific margins for image and video blocks */
+        .image-container {
+            margin-top: 20px; /* Margin from the top for the image block */
+        }
+        .video-container {
+            margin-bottom: 20px; /* Margin from the bottom for the video block */
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .custom-file-input {
+            display: inline-block;
+            width: 150px;
+            height: 50px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            border-radius: 5px;
+            position: relative;
+            font-size: 14px;
+        }
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        button {
+            display: block;
+            background-color: #cc3d09;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .footer {
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Ensures the footer is above other content */
+        }
+        @media (max-width: 600px) {
+            .custom-file-input {
+                width: 100%;
+                height: 60px;
+                line-height: 60px;
+                font-size: 16px;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Fake Analyzer</h1>
+     
+    </div>
+    <div class="container image-container">
+        <h3>Select Image:</h3>
+        <div class="button-group">
+            <div class="custom-file-input" id="input1">
+                Forgery & MetaData
+                <input type="file" id="fileInput1">
+            </div>
+            <div class="custom-file-input" id="input2">
+                Deepfake
+                <input type="file" id="fileInput2">
+            </div>
+            <div class="custom-file-input" id="input3">
+                Social Media Analysis
+                <input type="file" id="fileInput3">
+            </div>
+            <button onclick="uploadImage()">Check Authenticity</button>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <div class="container">
+        <h3>Select Audio:</h3>
+        <div class="button-group">
+            <div class="custom-file-input" id="input4">
+                Forgery & MetaData
+                <input type="file" id="fileInput4">
+            </div>
+            <div class="custom-file-input" id="input5">
+                Deepfake
+                <input type="file" id="fileInput5">
+            </div>
+            <div class="custom-file-input" id="input6">
+                Social Media Analysis
+                <input type="file" id="fileInput6">
+            </div>
+            <button onclick="uploadAudio()">Check Authenticity</button>
+        </div>
+        <div class="result" id="result2"></div>
+    </div>
+
+    <div class="container video container">
+        <h3>Select Video:</h3>
+        <div class="button-group">
+            <div class="custom-file-input" id="input7">
+                Forgery & MetaData
+                <input type="file" id="fileInput7">
+            </div>
+            <div class="custom-file-input" id="input8">
+                Deepfake
+                <input type="file" id="fileInput8">
+            </div>
+            <div class="custom-file-input" id="input9">
+                Social Media Analysis
+                <input type="file" id="fileInput9">
+            </div>
+            <div class="custom-file-input" id="input10">
+                Liveness Analysis
+                <input type="file" id="fileInput10">
+            </div>
+            <div class="custom-file-input" id="input11">
+                LipSync Analysis
+                <input type="file" id="fileInput11">
+            </div>
+            <div class="custom-file-input" id="input12">
+                NSFW Analysis
+                <input type="file" id="fileInput12">
+            </div>
+            <button onclick="uploadVideo()">Check Authenticity</button>
+        </div>
+        <div class="result" id="result3"></div>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2024 CDAC. All rights reserved.</p>
+    </div>
+
+    <script src="static/up.js"></script>
+</body>
+</html>
