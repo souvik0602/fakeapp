@@ -4,387 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fake Analyzer</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: #f9f9f9;
-            padding-top: 80px; /* Space for the fixed navbar */
-            padding-bottom: 50px; /* Space for the fixed footer */
-        }
-        .navbar {
-            background-color: #007BFF;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000; /* Ensures the navbar is above other content */
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto; /* General margin for all containers */
-            text-align: center;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: auto; /* Ensures content does not overflow */
-        }
-        /* Specific margins for image and video blocks */
-        .image-container {
-            margin-top: 20px; /* Margin from the top for the image block */
-        }
-        .video-container {
-            margin-bottom: 20px; /* Margin from the bottom for the video block */
-        }
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        .custom-file-input {
-            display: inline-block;
-            width: 150px;
-            height: 50px;
-            background-color: #007BFF;
-            color: white;
-            text-align: center;
-            line-height: 50px;
-            cursor: pointer;
-            border-radius: 5px;
-            position: relative;
-            font-size: 14px;
-        }
-        .custom-file-input input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-        button {
-            display: block;
-            background-color: #cc3d09;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-            font-size: 16px;
-        }
-        .result {
-            margin-top: 20px;
-        }
-        .footer {
-            background-color: #f1f1f1;
-            text-align: center;
-            padding: 10px;
-            margin-top: auto;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000; /* Ensures the footer is above other content */
-        }
-        @media (max-width: 600px) {
-            .custom-file-input {
-                width: 100%;
-                height: 60px;
-                line-height: 60px;
-                font-size: 16px;
-            }
-            button {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
-    <!-- <script  type="text/javascript" src="./src/script.js" async></script> -->
-    <script>
-        let selectedFileInput = null;
-        let selectedFileInput2 = null;
-        let selectedFileInput3 = null;
-        document.addEventListener('DOMContentLoaded', () => {
-
-
-            document.getElementById('input1').addEventListener('click', () => selectedFileInput = 'fileInput1');
-            document.getElementById('input2').addEventListener('click', () => selectedFileInput = 'fileInput2');
-            document.getElementById('input3').addEventListener('click', () => selectedFileInput = 'fileInput3');
-            document.getElementById('input4').addEventListener('click', () => selectedFileInput2 = 'fileInput4');
-            document.getElementById('input5').addEventListener('click', () => selectedFileInput2 = 'fileInput5');
-            document.getElementById('input6').addEventListener('click', () => selectedFileInput2 = 'fileInput6');
-            document.getElementById('input7').addEventListener('click', () => selectedFileInput3 = 'fileInput7');
-            document.getElementById('input8').addEventListener('click', () => selectedFileInput3 = 'fileInput8');
-            document.getElementById('input9').addEventListener('click', () => selectedFileInput3 = 'fileInput9');
-            document.getElementById('input10').addEventListener('click', () => selectedFileInput3 = 'fileInput10');
-            document.getElementById('input11').addEventListener('click', () => selectedFileInput3 = 'fileInput11');
-            document.getElementById('input12').addEventListener('click', () => selectedFileInput3 = 'fileInput12');
-        });
-
-        async function uploadImage() {
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = "";
-            if (!selectedFileInput) {
-                resultDiv.textContent = "Please select a file.";
-                return;
-            }
-
-            const fileInput = document.getElementById(selectedFileInput);
-            if (fileInput.files.length === 0) {
-                resultDiv.textContent = "Please select a file.";
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const formData = new FormData();
-            formData.append('file', file);
-
-            let url;
-            switch (selectedFileInput) {
-
-
-                case 'fileInput1':
-                    url = '/proxy/upload-img-forge/';
-                    resultDiv.textContent = "Processing...";
-                    break;
-                case 'fileInput2':
-                    url = '/proxy/upload-img-df/';
-                    resultDiv.textContent = "Processing...";
-                    break;
-                case 'fileInput3':
-                    url = '/proxy/upload_image/';
-                    resultDiv.textContent = "Processing...";
-                    break;
-
-                default:
-                    resultDiv.textContent = "Error: Invalid input selection.";
-                    return;
-            }
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                resultDiv.textContent = `Prediction: ${data.Prediction}`;
-                selectedFileInput = null;
-            } catch (error) {
-                resultDiv.textContent = `Error: ${error.message}`;
-                selectedFileInput = null;
-            }
-        }
-
-        async function uploadAudio() {
-            const resultDiv = document.getElementById('result2');
-            if (!selectedFileInput2) {
-                resultDiv.textContent = "Please select a file.";
-                return;
-            }
-
-            const fileInput = document.getElementById(selectedFileInput2);
-            if (fileInput.files.length === 0) {
-                resultDiv.textContent = "Please select a file.";
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const formData = new FormData();
-            formData.append('file', file);
-
-            let url;
-            switch (selectedFileInput2) {
-                case 'fileInput4':
-                    url = 'http://10.240.12.205:8002/upload-img-forge/';
-                    break;
-                case 'fileInput5':
-                    url = 'http://10.240.12.205:8001/upload-img-df/';
-                    break;
-                case 'fileInput6':
-                    url = 'http://10.240.12.80:8000/upload_image';
-                    break;
-
-                default:
-                    resultDiv.textContent = "Error: Invalid input selection.";
-                    return;
-            }
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                resultDiv.textContent = `Prediction: ${data.Prediction}`;
-            } catch (error) {
-                resultDiv.textContent = `Error: ${error.message}`;
-            }
-        }
-
-        async function uploadVideo() {
-            const resultDiv = document.getElementById('result3');
-            if (!selectedFileInput3) {
-                resultDiv.textContent = "Please select a file.";
-                return;
-            }
-
-            const fileInput = document.getElementById(selectedFileInput3);
-            if (fileInput.files.length === 0) {
-                resultDiv.textContent = "Please select a file.";
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const formData = new FormData();
-            formData.append('file', file);
-
-            let url;
-            switch (selectedFileInput3) {
-                case 'fileInput7':
-                    url = 'http://10.240.12.205:8002/upload-img-forge/';
-                    break;
-                case 'fileInput8':
-                    url = 'http://10.240.12.205:8001/upload-img-df/';
-                    break;
-                case 'fileInput9':
-                    url = 'http://10.240.12.80:8000/upload_image';
-                    break;
-
-                case 'fileInput10':
-                    url = 'http://10.240.12.205:8002/upload-img-forge/';
-                    break;
-                case 'fileInput11':
-                    url = 'http://10.240.12.205:8001/upload-img-df/';
-                    break;
-                case 'fileInput12':
-                    url = 'http://10.240.12.80:8000/upload_image';
-                    break;
-
-                default:
-                    resultDiv.textContent = "Error: Invalid input selection.";
-                    return;
-            }
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                resultDiv.textContent = `Prediction: ${data.Prediction}`;
-            } catch (error) {
-                resultDiv.textContent = `Error: ${error.message}`;
-            }
-        }
-    </script>
+ <script src="static/up.js"></script>
     <div class="navbar">
-        <h1>Fake Analyzer</h1>
-     
-    </div>
-    <div class="container image-container">
-        <h3>Select Image:</h3>
-        <div class="button-group">
-            <div class="custom-file-input" id="input1">
-                Forgery & MetaData
-                <input type="file" id="fileInput1">
-            </div>
-            <div class="custom-file-input" id="input2">
-                Deepfake
-                <input type="file" id="fileInput2">
-            </div>
-            <div class="custom-file-input" id="input3">
-                Social Media Analysis
-                <input type="file" id="fileInput3">
-            </div>
-            <button onclick="uploadImage()">Check Authenticity</button>
+        <div class="logo">
+            <img src="static/cdac_logo.png" alt="Fake Analyzer Logo">
         </div>
-        <div class="result" id="result"></div>
-    </div>
+        <h1>Fake Analyzer </h1>
 
+    </div>
     <div class="container">
-        <h3>Select Audio:</h3>
-        <div class="button-group">
-            <div class="custom-file-input" id="input4">
-                Forgery & MetaData
-                <input type="file" id="fileInput4">
+        <!-- Image Section -->
+        <span class="toggle-button" id="toggleImageButton" onclick="toggleSection('imageContainer', 'toggleImageButton')">1. Image 🖼️</span>
+        <div class="image-container hidden" id="imageContainer">
+            <div class="result" id="resultImage"></div>
+           
+            <p align="left"></p>
+            <div class="file-input-group">
+			 <h4 align="left">Select Image (.jpg,.jpeg,.png):  </h4>
+                <label  class="custom-file-input" aria-label="Upload image file">
+                    <input type="file" id="fileInput1" accept=".jpg, .png,.jpeg" onchange="previewImage(event)">
+                </label>
+                <p  id="fileName" > No file selected</p>
+                <img id="imagePreview" style="max-width: 300px; max-height: 100px; margin-left: 20px; display: none;">
+                
             </div>
-            <div class="custom-file-input" id="input5">
-                Deepfake
-                <input type="file" id="fileInput5">
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="analysis" value="forgery"> Forgery Analysis
+                </label>
+                <label>
+                    <input type="radio" name="analysis" value="deepfake"> Deepfake Analysis
+                </label>
+                <label>
+                    <input type="radio" name="analysis" value="social"> Social Media Analysis
+                </label>
             </div>
-            <div class="custom-file-input" id="input6">
-                Social Media Analysis
-                <input type="file" id="fileInput6">
-            </div>
-            <button onclick="uploadAudio()">Check Authenticity</button>
+            <button class="auth-button" onclick="uploadImage()">Check Authenticity</button>
+           
         </div>
-        <div class="result" id="result2"></div>
+        
+        <!-- Audio Section -->
+        <span class="toggle-button" id="toggleAudioButton" onclick="toggleSection('audioContainer', 'toggleAudioButton')">2. Audio 🎵</span>
+        <div class="audio-container hidden" id="audioContainer">
+            <div class="result" id="resultAudio"></div>
+            <p align="left"></p>
+            <div class="file-input-group">
+                <h4 align="left">Select Audio (.wav): </h4>
+                <label class="custom-file-input" aria-label="Upload audio file">
+                    <input type="file" id="fileInput2" accept=".mp3, .wav" onchange="previewAudio(event)">
+                </label>
+                <p id="fileNameAudio">No file selected</p>
+                <audio id="audioPreview" controls style="max-width: 250px; margin-left: 20px; display: none;"></audio>
+            </div>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="audioAnalysis" value="forgery"> Forgery Analysis
+                </label>
+                <label>
+                    <input type="radio" name="audioAnalysis" value="deepfake"> Deepfake Analysis
+                </label>
+                <label>
+                    <input type="radio" name="audioAnalysis" value="social"> Social Media Analysis
+                </label>
+            </div>
+            <button class="auth-button" onclick="uploadAudio()">Check Authenticity</button>
+            
+        </div>
+        
+        <!-- Video Section -->
+        <span class="toggle-button" id="toggleVideoButton" onclick="toggleSection('videoContainer', 'toggleVideoButton')">3. Video 🎥</span>
+        <div class="video-container hidden" id="videoContainer">
+            <div class="result" id="resultVideo"></div>
+            <p align="left"></p>
+            
+            <div class="file-input-group">
+                <h4 align="left">Select Video (.mp4):</h4>
+                <label class="custom-file-input" aria-label="Upload video file">
+                    <input type="file" id="fileInput3" accept=".mp4, .avi" onchange="previewVideo(event)">
+                </label>
+                <p id="fileNameVideo">No file selected</p>
+                <video id="videoPreview" controls style="max-width: 300px; max-height: 200px; margin-left: 20px; display: none;"></video>
+            </div>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="videoAnalysis" value="forgery"> Forgery Analysis
+                </label>
+                <label>
+                    <input type="radio" name="videoAnalysis" value="deepfake"> Deepfake Analysis
+                </label>
+                <label>
+                    <input type="radio" name="videoAnalysis" value="social"> Social Media Analysis
+                </label>
+            </div>
+            <div class="radio-group">
+				 <label>
+                    <input type="radio" name="videoAnalysis" value="liveness"> Liveness Analysis
+                </label>
+                <label>
+                    <input type="radio" name="videoAnalysis" value="lipsyc"> Lipsync Analysis
+                </label>
+                <label>
+                    <input type="radio" name="videoAnalysis" value="nsfw"> NSFW Analysis
+                </label>
+            </div>
+            <button class="auth-button" onclick="uploadVideo()">Check Authenticity</button>
+           
+        </div>
     </div>
-
-    <div class="container video container">
-        <h3>Select Video:</h3>
-        <div class="button-group">
-            <div class="custom-file-input" id="input7">
-                Forgery & MetaData
-                <input type="file" id="fileInput7">
-            </div>
-            <div class="custom-file-input" id="input8">
-                Deepfake
-                <input type="file" id="fileInput8">
-            </div>
-            <div class="custom-file-input" id="input9">
-                Social Media Analysis
-                <input type="file" id="fileInput9">
-            </div>
-            <div class="custom-file-input" id="input10">
-                Liveness Analysis
-                <input type="file" id="fileInput10">
-            </div>
-            <div class="custom-file-input" id="input11">
-                LipSync Analysis
-                <input type="file" id="fileInput11">
-            </div>
-            <div class="custom-file-input" id="input12">
-                NSFW Analysis
-                <input type="file" id="fileInput12">
-            </div>
-            <button onclick="uploadVideo()">Check Authenticity</button>
-        </div>
-        <div class="result" id="result3"></div>
+    <div class="footer">
+        <p> &copy; 2024 CDAC. All Rights Reserved</p>
     </div>
     
-    <div class="footer">
-        <p>&copy; 2024 CDAC. All rights reserved.</p>
-    </div>
 
-    <!-- <script src="./src/script.js" async></script> -->
+
+
 </body>
 </html>

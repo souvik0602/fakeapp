@@ -1,0 +1,233 @@
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: rgb(240,248,251);
+    background: linear-gradient(90deg, rgba(240,248,251,1) 0%, rgba(247,247,247,1) 50%, rgba(240,248,251,1) 100%);
+    padding-bottom: 50px; /* Space for the fixed footer */
+}
+.navbar {
+    /* background: rgb(104,219,255);
+    background: linear-gradient(90deg, rgba(104,219,255,1) 0%, rgba(247,247,247,1) 50%, rgba(104,219,255,1) 100%); 
+     */
+     background: rgb(123,233,156);
+     background: linear-gradient(90deg, rgba(123,233,156,1) 0%, rgba(255,255,255,1) 90%); position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensures the navbar is above other content */
+    display: flex;
+
+    align-items: center;
+    padding: 5px 10px; /* Padding around navbar items */
+    box-sizing: border-box; /* Include padding in width calculations */
+    overflow: hidden; /* Hide overflow if content exceeds width */
+}
+.navbar .logo {
+    margin-right: 30px; /* Space between logo and text */
+}
+
+.navbar h1 {
+    margin: 0;
+   /* flex-grow: 1;  Allow title to take up remaining space */
+    font-size: 24px;
+    text-align: center;
+}
+
+
+
+
+.navbar .logo img {
+    max-height: 50px; /* Adjust logo size as needed */
+    height: auto;
+    margin-left: 20px;
+}
+.container {
+    max-width: 600px;
+    margin: 20px auto; /* General margin for all containers */
+    text-align: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto; /* Ensures content does not overflow */
+    margin-top: 150px; /* Adjust this to ensure spacing below the navbar */
+}
+
+.audio-container,
+.video-container {
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+.custom-file-input {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: relative;
+    font-size: 20px;
+}
+.custom-file-input input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.custom-file-input::before {
+    content: "📂";
+    margin-right: 10px;
+}
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.auth-button {
+    display: block;
+    background-color: #e56a3d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px auto;
+    font-size: 16px;
+}
+
+.auth-button.disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+.result {
+    margin-top: 20px;
+    font-size: 20px;
+    padding: 10px;
+    display: inline-block; /* Adjust width to content */
+
+}
+.footer {
+    background-color: #cacaca;
+    text-align: center;
+    padding: 10px;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensures the footer is above other content */
+}
+.file-input-group {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    text-align: left; /* Align contents to the left */
+    margin-left: 0; /* Optional: Ensure no additional margin */
+}
+
+
+.toggle-button {
+    cursor: pointer;
+    color: #007BFF;
+    margin-bottom: 10px;
+    display: block;
+    text-align: left; /* Align text to the left */
+    font-size: 25px;
+    padding-left: 20px; /* Padding for numbered bullets */
+    list-style: decimal inside; /* Numbered bullets */
+
+    background-color: #f0f0f0; /* Default background color */
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+.toggle-button.active {
+    background-color: #dde7f1; /* Change to your preferred color */
+    color: rgb(255, 30, 0);
+    font-weight: bold;
+}
+
+/* Optional: Add a hover effect */
+.toggle-button:hover {
+    background-color: #e0e0e0; /* Change to a lighter color on hover */
+}
+
+.toggle-button.small-font {
+    font-size: 10x; /* Smaller font size for minimized sections */
+}
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+
+
+@media (max-width:414px) {
+    .file-input-group h4 {
+        text-align: left;
+    }
+
+    #imagePreview, #audioPreview {
+        max-width: 100%;
+        max-height: 200px;
+    }
+
+    .auth-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .navbar {
+        padding: 10px;
+        flex-direction: column;
+        align-items: flex-start; /* Align items to the start on small screens */
+    }
+
+    .navbar .logo {
+        margin-bottom: 10px; /* Space between logo and title on small screens */
+    }
+
+    .navbar h1 {
+        font-size: 20px; /* Adjust font size on small screens */
+        text-align: left;
+        width: 100%;
+    }
+
+/* @media (max-width: 600px) {
+    .custom-file-input {
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        font-size: 16px;
+        text-align: left;
+
+    }
+    .file-input-group {
+        flex-direction: column;
+    }
+    .auth-button {
+        width: 100%;
+        
+    } */
+}
