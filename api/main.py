@@ -17,4 +17,4 @@ async def read_index():
     return HTMLResponse(content=content)
 
 if __name__ == "__main__":
-    uvicorn.run("start:app", host="0.0.0.0", port=80,reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=80,reload=True)
